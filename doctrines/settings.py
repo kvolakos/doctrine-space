@@ -56,7 +56,7 @@ ROOT_URLCONF = 'doctrines.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['mainapp/templates/mainapp'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
