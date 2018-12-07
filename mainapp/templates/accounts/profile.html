@@ -1,5 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
-{{ User.user }}
-{{ User.uid }}
+<div class="card text-white bg-secondary mb-3" style="width: 18rem;">
+  <img class="card-img-top" src="https://image.eveonline.com/Character/{{User.uid}}_256.jpg" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">{{ User.user }}</h5>
+    {% if corp %}
+    <img class="img-fluid" src="https://image.eveonline.com/Corporation/{{corp.id}}_32.png" alt="Corp logo">
+    <p class="card-text">{{ corp.name }}</p>
+    {% endif %}
+    {% if alliance %}
+    <img src="https://image.eveonline.com/Alliance/{{alliance.id}}_32.png" alt="Corp logo">
+    <p class="card-text">{{ alliance.name }}</p>
+    {% endif %}
+    <p class="card-text">User ID: {{ User.uid }}</p>
+  </div>
+</div>
 {% endblock %}
