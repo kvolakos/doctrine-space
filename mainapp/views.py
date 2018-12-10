@@ -2,9 +2,25 @@ from django.shortcuts import render
 from django.contrib.auth import logout
 import requests as r
 
+from django.db import connection
+
 
 def index(request):
-    return render(request, 'mainapp/index.html')
+    checklist = {}
+    k = 782
+    with connection.cursor() as cursor:
+        for s in [11, 12, 13, 2663]:
+            cursor.execute("SELECT * FROM invTypes JOIN dgmTypeEffects ON invTypes.typeID=dgmTypeEffects.typeID WHERE dgmTypeEffects.effectID=%s" % s)
+            for i in cursor.fetchall():
+                if i[1] in checklist:
+                    checklist[i[1]].append(i[2])
+                else:
+                    checklist[i[1]] = [i[2]]
+        cursor.execute("SELECT * FROM invGroups WHERE groupID=%s" % k)
+        group = cursor.fetchone()
+    context = {'checklist': checklist[k], 'group': group[2]}
+    return render(request, 'mainapp/index.html', context)
+
 
 def profile(request):
     if not request.user.is_authenticated:
@@ -22,6 +38,7 @@ def profile(request):
     context = {'User': User, 'corp': corporation, 'alliance': alliance}
 
     return render(request, 'accounts/profile.html', context)
+
 
 def logout_view(request):
     logout(request)
