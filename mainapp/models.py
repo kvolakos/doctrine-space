@@ -6,6 +6,7 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Agtagenttypes(models.Model):
@@ -1172,7 +1173,7 @@ class Warcombatzones(models.Model):
 
 
 class Invtypes(models.Model):
-    typeid = models.IntegerField(db_column='typeID', primary_key=True)  # Field name made lowercase.
+    typeid = models.IntegerField(db_column='typeID', primary_key=True, unique=True)  # Field name made lowercase.
     groupid = models.IntegerField(db_column='groupID', blank=True, null=True)  # Field name made lowercase.
     typename = models.CharField(db_column='typeName', max_length=100, blank=True, null=True)  # Field name made lowercase.
     description = models.TextField(blank=True, null=True)
@@ -1206,3 +1207,43 @@ class Dgmtypeeffects(models.Model):
     def __str__(self):
         return '%s %s' % (self.typeid, self.effectid)
 
+
+# class Mod(models.Model):
+#     name = models.CharField(max_length=200)
+#     module = models.OneToOneField(Invtypes, on_delete=models.SET_NULL, null=True, blank=True)
+#     type = models.IntegerField()  # 11 = low, 12 = high, 13 = mid
+
+class Inventory(models.Model):
+    groupid = models.IntegerField(db_column='groupID', blank=True, null=True)  # Field name made lowercase.
+    typename = models.CharField(db_column='typeName', max_length=100, blank=True, null=True)  # Field name made lowercase.
+    description = models.TextField(blank=True, null=True)
+    iconid = models.IntegerField(db_column='iconID', blank=True, null=True)  # Field name made lowercase.
+
+
+class Fitting(models.Model):
+    name = models.CharField(max_length=200)
+    ship_id = models.IntegerField(default=32880)
+    ship_name = models.CharField(max_length=200, default="Venture")
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    fitstring = models.TextField(max_length=4000, null=True)
+
+    # highs = models.ManyToManyField(EveMod, blank=True, related_name="high_related")
+    # mids = models.ManyToManyField(EveMod, blank=True, related_name="mid_related")
+    # lows = models.ManyToManyField(EveMod, blank=True, related_name="low_related")
+    # rigs = models.ManyToManyField(EveMod, blank=True, related_name="rig_related")
+
+    # highs = models.ManyToManyField(Inventory, blank=True, related_name="high_related")
+    # mids = models.ManyToManyField(Inventory, blank=True, related_name="mid_related")
+    # lows = models.ManyToManyField(Inventory, blank=True, related_name="low_related")
+    # rigs = models.ManyToManyField(Inventory, blank=True, related_name="rig_related")
+
+
+# class EveMod(models.Model):
+#     typeid = models.ForeignKey(Invtypes, to_field="typeid", on_delete=models.CASCADE)
+#     fitid = models.ForeignKey(Fitting, on_delete=models.CASCADE)
+
+class Doctrine(models.Model):
+    name = models.CharField(max_length=200)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+
+    fittings = models.ManyToManyField(Fitting, blank=True)

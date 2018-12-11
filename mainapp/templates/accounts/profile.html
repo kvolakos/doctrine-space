@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="card text-white bg-secondary p-0 col-3">
+<div class="container-fluid mt-5">
+    <div class="row m-5">
+        <div class="card text-white bg-dark p-0 d-flex align-items-stretch">
             <img class="card-img-top rounded" src="https://image.eveonline.com/Character/{{User.uid}}_256.jpg" alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title">{{ User.user }}</h5>
@@ -18,6 +18,20 @@
                 {% endif %}
                 <p class="card-text">User ID: {{ User.uid }}</p>
             </div>
+        </div>
+        <div class="card border-dark text-white bg-dark d-flex align-items-stretch">
+          <div class="card-header">Available Fittings</div>
+          <div class="card-body">
+            <h5 class="card-title">Fittings</h5>
+              <!-- Put for loop consisting of fittings listing here, based on logged-in user -->
+              {% if fittings %}
+              {% for fitting in fittings %}
+                <p class="card-text"><a class="text-info" href="/mainapp/fitting/?id={{fitting.id}}">{{fitting.name}} -- {{fitting.ship_name}}</a></p>
+              {% endfor %}
+              {% else %}
+                <p>No fittings saved!</p>
+              {% endif %}
+          </div>
         </div>
     </div>
 </div>

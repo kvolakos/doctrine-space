@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="alert alert-danger" role="alert">
+    Requested fit not found, invalid, or you do not have authorization to view it.
+</div>
+
+<div class="container-fluid">
+    <div class="row col-sm-3">
+        <a class="btn btn-primary" href="/accounts/profile/" role="button">Return to Profile</a>
+    </div>
+</div>
+{% endblock %}

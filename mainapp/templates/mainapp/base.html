@@ -26,16 +26,19 @@
         <a class="nav-link" href="/mainapp">Home<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Groups</a>
+        <a class="nav-link disabled" href="#">Groups</a>
       </li>
       <li class="nav-item {% if request.path == '/accounts/profile/' %}active{% endif %}">
         <a class="nav-link {% if not user.is_authenticated %}btn disabled{% endif %}" href="/accounts/profile">Profile</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Fittings</a>
+      <li class="nav-item {% if request.path == '/mainapp/fitting/' %}active{% endif %}">
+        <a class="nav-link" href="/mainapp/fitting">Add Fitting</a>
       </li>
     </ul>
         <!--<li class="nav-item">-->
+            {% if user.is_superuser %}
+            <a class="nav-link" href="/admin/">Admin Panel</a>
+            {% endif %}
             {% if not user.is_authenticated %}
             {% load static %}
             <a class="nav-link" href="{% url 'social:begin' 'eveonline' %}"><img src="{% static 'mainapp/eve-sso-login-white-small.png' %}" alt="Login"></a>

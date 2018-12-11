@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid mt-5">
+    <div class="row m-5">
+        <div class="card text-white bg-dark p-0 d-flex align-items-stretch">
+            <img class="card-img-top rounded" src="https://image.eveonline.com/Render/{{fit.ship_id}}_256.png"
+                 alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">{{ fit.name }} -- {{ fit.ship_name }}</h5>
+                {% if fit.author %}
+                <p class="card-text">
+                    <img class="img-fluid" src="https://image.eveonline.com/Character/{{User.uid}}_32.jpg"
+                         alt="Player icon">
+                    {{ User.user }}</p>
+                {% endif %}
+                <p class="card-text">Fit ID: {{ fit.id }}</p>
+            </div>
+        </div>
+        <div class="card border-dark text-white bg-dark d-flex align-items-stretch">
+            <div class="card-header">Fitting</div>
+            <div class="card-body">
+                {% if highs %}
+                <ul class="list-group mb-1">
+                    {% for slot in highs %}
+                    <li class="list-group-item py-0 bg-secondary">{{ slot }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                {% if mids %}
+                <ul class="list-group mb-1">
+                    {% for slot in mids %}
+                    <li class="list-group-item py-0 bg-secondary">{{ slot }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                {% if lows %}
+                <ul class="list-group mb-1">
+                    {% for slot in lows %}
+                    <li class="list-group-item py-0 bg-secondary">{{ slot }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                {% if rigs %}
+                <ul class="list-group">
+                    {% for slot in rigs %}
+                    <li class="list-group-item py-0 bg-secondary">{{ slot }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
